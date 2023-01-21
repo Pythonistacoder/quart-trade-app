@@ -1,15 +1,23 @@
-from quart import Quart, Blueprint
+from quart import Quart, request
 from quart_cors import cors
 
-from routes.login import login
 from service.background_task import background_task
 from utils.square_off import sqaure_off
 
-
+from constants.global_contexts import set_access_token
 
 app = Quart(__name__)
 app.config["PROPAGATE_EXCEPTIONS"] = True
 app = cors(app, allow_origin="*")
+
+@app.get("/set")
+async def set_token_request():
+    try:
+        set_access_token(request.args["token"])
+        return {"message":"Token set"}
+    except:
+        return {"message":"there is an error"}
+
 @app.get("/start")
 async def start_process():
     try:
@@ -17,6 +25,7 @@ async def start_process():
         return {"message":"Background process started"}
     except:
         return {"message":"Kindly login first"}
+
 @app.route("/stop")
 async def stop_background_tasks():
     """
@@ -27,12 +36,7 @@ async def stop_background_tasks():
         task.cancel()
     sqaure_off()
     return {"message":"All task cancelled"}
-resource_list:Blueprint=[login]
-for resource in resource_list:
-    app.register_blueprint(blueprint=resource)
-
 
 
 if __name__ == "__main__":
-    # app.run(host='0.0.0.0',port=80)
     app.run(port=8080)
