@@ -87,7 +87,7 @@ class Account:
                     used_margin += stock_position.invested_amount
                 else:
 
-                    logger.info(f"{position} was bought accidently. If it arises then check for bug.")
+                    logger.info(f"{position['tradingsymbol']} was bought accidently. If it arises then check for bug.")
 
         self.__used_margin = used_margin
     

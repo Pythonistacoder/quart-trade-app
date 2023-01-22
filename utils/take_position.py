@@ -1,7 +1,5 @@
 from constants.global_contexts import kite_context
 
-from models.stock import Stock
-
 def short(symbol:str, quantity:int):
     """
         takes a short position in situations where it will either
@@ -20,10 +18,9 @@ def short(symbol:str, quantity:int):
             product=kite_context.PRODUCT_MIS,
             validity=kite_context.VALIDITY_DAY
         )
-        stock = Stock(symbol=symbol, exchange='NSE')
-    except Exception as e:
-        raise e
-    return response_data
+        return True     
+    except Exception as e:    
+        return False
 
 def long(symbol: str, quantity: int):
     """
@@ -43,9 +40,6 @@ def long(symbol: str, quantity: int):
             product=kite_context.PRODUCT_MIS,
             validity=kite_context.VALIDITY_DAY
         )
-        stock = Stock(symbol=symbol, exchange='NSE')
-        return True
-        
-    except Exception as e:
-        
+        return True     
+    except Exception as e:    
         return False

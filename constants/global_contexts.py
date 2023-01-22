@@ -1,5 +1,4 @@
 from kiteconnect import KiteConnect
-import requests
 
 from constants.kite_credentials import API_KEY
 

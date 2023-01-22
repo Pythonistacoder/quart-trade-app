@@ -18,7 +18,7 @@ class TrackAccount:
         condition2 = monthly_data["Close"].iloc[-2] > LOWER_PRICE
         selected_monthly_data = monthly_data["Close"][list(monthly_data["Close"].iloc[-2][condition2 & condition1].index)]
         returns = selected_monthly_data.pct_change()+1
-        selected_monthly_data.iloc[-2][(returns.iloc[-2] > 1.02) & (returns.iloc[-3]>1.02)].to_csv("starting_stocks.csv")
+        selected_monthly_data.iloc[-2][(returns.iloc[-2] > 1.02) & (returns.iloc[-3]>1.02) & (returns.iloc[-4] < 1)].to_csv("starting_stocks.csv")
         return dict(selected_monthly_data.iloc[-2][(returns.iloc[-2] > 1.02) & (returns.iloc[-3]>1.02)])
 
     @staticmethod
